@@ -1,5 +1,7 @@
 package controlador;
 
+import java.awt.HeadlessException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -63,9 +65,14 @@ public class Coordinador {
 		return misProcesos.calcularDefinitiva(promedio);
 	}
 
-	public String registrarEnBD(EstudianteVO estudiante) {
+	public String registrarEnBD(EstudianteVO estudiante)  {
 		//misProcesos.registrarEnBD(estudiante);
-		return miEstudianteDAO.registrarEstudiante(estudiante);
+		try {
+			return miEstudianteDAO.registrarEstudiante(estudiante);
+		} catch (SQLException e) {
+			//e.printStackTrace();
+			return "error";
+		}
 	}
 
 	public void mostrarVentanaConsultaPersonas() {
@@ -81,7 +88,12 @@ public class Coordinador {
 	public ArrayList<EstudianteVO> getListaPersonas() {
 		
 		//return misProcesos.getListaPersonas();
-		return miEstudianteDAO.consultarListaEstudiantes();
+		try {
+			return miEstudianteDAO.consultarListaEstudiantes();
+		} catch (SQLException e) {
+			//e.printStackTrace();
+			return new ArrayList<EstudianteVO>();
+		}
 	}
 
 	public void mostrarConsultarEstudiante() {
@@ -95,15 +107,30 @@ public class Coordinador {
 
 	public EstudianteVO obtenerEstudiante(String documento) {
 		
-		return miEstudianteDAO.consultarEstudiante(documento);
+		try {
+			return miEstudianteDAO.consultarEstudiante(documento);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
-	public String actualizarEstudiante(EstudianteVO miEstudiante) {
-		return miEstudianteDAO.actualizaEstudiante(miEstudiante);
+	public String actualizarEstudiante(EstudianteVO miEstudiante)  {
+		try {
+			return miEstudianteDAO.actualizaEstudiante(miEstudiante);
+		} catch (SQLException e) {
+			//e.printStackTrace();
+			return "error"; 
+		}
 	}
 
-	public String eliminarEstudiante(String documento) {
-		return miEstudianteDAO.eliminarEstudiante(documento);
+	public String eliminarEstudiante(String documento)  {
+		try {
+			return miEstudianteDAO.eliminarEstudiante(documento);
+		} catch (SQLException e) {
+			//e.printStackTrace();
+			return "error"; 
+		}
 	}
 
 

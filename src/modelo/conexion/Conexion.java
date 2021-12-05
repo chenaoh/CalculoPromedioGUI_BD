@@ -1,7 +1,5 @@
 package modelo.conexion;
 
-
-import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,39 +16,39 @@ public class Conexion {
 			+ "serverTimezone=UTC";
 
 	Connection conn=null;
-	//constructor de la clase
-	public Conexion(){
+	
+	public String conectar() {
+		String respuesta="";
 		try {
 			//obtener el driver
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			//obtener la conexion
 			conn=DriverManager.getConnection(url,usuario,password);
 			if (conn!=null) {
-				System.out.println("Conexion Exitosa  a la BD: "+nombreBd);
+				respuesta="conectado";
 			}else{
-				System.out.println("******************NO SE PUDO CONECTAR "+nombreBd);
+				respuesta="NO SE PUDO CONECTAR "+nombreBd;
 			}
 		}
 		catch (ClassNotFoundException e) {
-			System.out.println("ocurre una ClassNotFoundException : "+e.getMessage());
+			respuesta="ocurre una ClassNotFoundException : "+e.getMessage();
 		}
 		catch (SQLSyntaxErrorException e) {
-			System.out.println("ocurre una SQLException: "+e.getMessage());
-			System.out.println("Verifique que se esté usando la base de datos y tablas correctas...");
-
+			respuesta="ocurre una SQLSyntaxErrorException: "+e.getMessage()+"\n";
+			respuesta+="Verifique que se esté usando la base de datos y tablas correctas...";
 		}
 		catch (CommunicationsException e) {
-			System.out.println("ocurre una SQLException: "+e.getMessage());
-			System.out.println("Verifique que la base de datos está prendida...");
+			respuesta="ocurre una CommunicationsException: "+e.getMessage()+"\n";
+			respuesta+="Verifique que la base de datos fué iniciada...";
 		}
 		catch (SQLException e) {
-			System.out.println("ocurre una SQLException: "+e.getMessage());
-			System.out.println("Este es un problema general de SQL, verifique con el administrador");
+			respuesta="ocurre una SQLException: "+e.getMessage()+"\n";
+			respuesta+="Este es un problema general de SQL, verifique con el administrador";
 		}
 		
-
-
+		return respuesta;
 	}
+	
 	public Connection getConnection(){
 		return conn;
 	}

@@ -176,6 +176,7 @@ public class VentanaConsulta extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==btnConsultar) {
+			lblResActualizacion.setText("");
 			EstudianteVO miEstudiante=miCoordinador.obtenerEstudiante(txtDoc.getText());
 			if (miEstudiante!=null) {
 				txtNombre.setText(miEstudiante.getNombre());
