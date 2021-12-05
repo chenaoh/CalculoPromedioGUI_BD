@@ -218,13 +218,22 @@ public class VentanaConsulta extends JFrame implements ActionListener{
 			String res=miCoordinador.eliminarEstudiante(documento);
 			
 			if (res.equals("ok")) {
+				limpiarCampos();
 				lblResActualizacion.setText("Se ha eliminado correctamente");
-				txtDoc.setText("");txtNombre.setText("");txtNota1.setText("");
-				txtNota2.setText("");txtNota3.setText("");lblResPromedio.setText("");
-				lblResultado.setText("");
 			}else {
 				lblResActualizacion.setText("No se pudo eliminar");
 			}
 		}
+	}
+
+	public void limpiarCampos() {
+		txtDoc.setText("");
+		txtNombre.setText("");
+		txtNota1.setText("");
+		txtNota2.setText("");
+		txtNota3.setText("");
+		lblResPromedio.setText("");
+		lblResultado.setText("");
+		lblResActualizacion.setText("");
 	}
 }

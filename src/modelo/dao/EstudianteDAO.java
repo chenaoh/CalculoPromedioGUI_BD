@@ -14,10 +14,6 @@ import modelo.vo.EstudianteVO;
 
 public class EstudianteDAO{
 	private Coordinador miCoordinador;
-
-	public void setCoordinador(Coordinador miCoordinador) {
-		this.miCoordinador=miCoordinador;
-	}
 	
 	Connection connection = null;
 	Conexion conexion = null;
@@ -57,8 +53,7 @@ public class EstudianteDAO{
 			preStatement.execute();
 
 			resultado = "ok";
-			
-			
+		
 		}catch (SQLException e) {
 			System.out.println("No se pudo registrar el estudiante, verifique que el documento no exista: " + e.getMessage());
 			//e.printStackTrace();
@@ -86,9 +81,7 @@ public class EstudianteDAO{
 		}
 		
 		ResultSet result=null;
-		
-		
-
+	
 		String consulta="SELECT documento_est,nombre_est,nota1,nota2,nota3,promedio"
 				+ " FROM estudiante where documento_est= ? ";
 		
@@ -127,9 +120,7 @@ public class EstudianteDAO{
 		}
 		
 		ResultSet result=null;
-		
 		EstudianteVO miEstudiante=null;
-
 		
 		String consulta="SELECT documento_est,nombre_est,nota1,nota2,nota3,promedio"
 				+ " FROM estudiante ";
@@ -204,11 +195,12 @@ public class EstudianteDAO{
 
 	public String eliminarEstudiante(String documento) throws SQLException {
 		
+		String respuesta="";
+		
 		if (!conectar().equals("conectado")) {
 			return "error";
 		}
 		
-		String resp="";
 		try {
 			String sentencia="DELETE FROM estudiante WHERE documento_est= ? ";
 
@@ -217,18 +209,22 @@ public class EstudianteDAO{
 			
 			statement.executeUpdate();
 						
-			resp="ok";
+			respuesta="ok";
 			
 		} catch (SQLException e) {
             System.out.println("Ocurrió una excepcion de SQL "
             		+ "al momento de eliminar "+e);
-			resp="error";
+			respuesta="error";
 		}finally {
 			preStatement.close();
 			connection.close();
 			conexion.desconectar();
 		}
-		return resp;
+		return respuesta;
+	}
+	
+	public void setCoordinador(Coordinador miCoordinador) {
+		this.miCoordinador=miCoordinador;
 	}
 
 }

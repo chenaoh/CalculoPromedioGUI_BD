@@ -97,6 +97,7 @@ public class Coordinador {
 	}
 
 	public void mostrarConsultarEstudiante() {
+		ventanaConsulta.limpiarCampos();
 		ventanaConsulta.setVisible(true);
 	}
 
